@@ -1,14 +1,18 @@
 {
   "name": "instagram-bootcamp",
+  "homepage": "https://jordung.github.io/instagram-bootcamp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "firebase": "^9.8.0",
+    "gh-pages": "^5.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
