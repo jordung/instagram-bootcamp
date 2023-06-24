@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { database } from "../firebase";
-import { onChildAdded, ref as databaseRef } from "firebase/database";
-import { Card } from "react-bootstrap";
+import {
+  onChildAdded,
+  ref as databaseRef,
+  remove,
+  onChildRemoved,
+} from "firebase/database";
+import { Card, Button } from "react-bootstrap";
+import { deleteObject, ref as storageRef } from "firebase/storage";
+import { storage } from "../firebase";
 
 function MessageList() {
   const [messages, setMessages] = useState([]);
@@ -17,6 +24,32 @@ function MessageList() {
     });
   }, []);
 
+  useEffect(() => {
+    const messagesRef = databaseRef(database, DB_MESSAGES_KEY);
+    onChildRemoved(messagesRef, (data) => {
+      let messageArray = [...messages];
+      let newMessageArray = messageArray.filter(
+        (item) => item.key !== data.key
+      );
+      setMessages(newMessageArray);
+    });
+  });
+
+  const handleDelete = (messageKey, fileName) => {
+    const deleteFromStorage = storageRef(storage, fileName);
+    deleteObject(deleteFromStorage)
+      .then(() => console.log("Deleted from storage!"))
+      .catch((error) => console.log("Error deleting from storage", error));
+
+    const deleteFromDB = databaseRef(
+      database,
+      DB_MESSAGES_KEY + "/" + messageKey
+    );
+    remove(deleteFromDB)
+      .then(() => console.log("Deleted from database!"))
+      .catch((error) => console.log("Error deleting from database", error));
+  };
+
   return (
     <div>
       {messages && messages.length > 0 ? (
@@ -25,9 +58,12 @@ function MessageList() {
             key={messageItem.key}
             style={{
               width: "50vw",
-              height: "50vh",
               margin: "1em",
               padding: "2em",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Card.Title>{messageItem.val.date}</Card.Title>
@@ -39,6 +75,13 @@ function MessageList() {
               />
             </div>
             <Card.Text>{messageItem.val.message}</Card.Text>
+            <Button
+              variant="outline-danger"
+              className="w-50"
+              onClick={() => handleDelete(messageItem.key, messageItem.val.ref)}
+            >
+              Delete
+            </Button>
           </Card>
         ))
       ) : (
