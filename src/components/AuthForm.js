@@ -10,6 +10,7 @@ export default function AuthForm() {
   const [password, setPassword] = useState("");
 
   const signUp = async () => {
+    console.log("signUp");
     const user = await createUserWithEmailAndPassword(auth, email, password);
     console.log(user);
     setEmail("");
@@ -17,6 +18,7 @@ export default function AuthForm() {
   };
 
   const signIn = async () => {
+    console.log("signIn");
     const user = await signInWithEmailAndPassword(auth, email, password);
     console.log(user);
     setEmail("");
@@ -25,29 +27,27 @@ export default function AuthForm() {
 
   return (
     <div>
-      <form>
-        <label>Email</label>
-        <br />
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email Here"
-        />
-        <br />
-        <label>Password</label>
-        <br />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password Here"
-        />
-        <br />
+      <label>Email</label>
+      <br />
+      <input
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email Here"
+      />
+      <br />
+      <label>Password</label>
+      <br />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password Here"
+      />
+      <br />
 
-        <button onClick={signUp}>Sign Up</button>
-        <button onClick={signIn}>Sign In</button>
-      </form>
+      <button onClick={signUp}>Sign Up</button>
+      <button onClick={signIn}>Sign In</button>
     </div>
   );
 }
