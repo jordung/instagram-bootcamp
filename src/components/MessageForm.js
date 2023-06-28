@@ -49,24 +49,28 @@ function MessageForm() {
   };
 
   return (
-    <form className="form">
-      <input
-        type="text"
-        value={textInputValue}
-        onChange={handleChange}
-        placeholder="Enter your message"
-      />
-      <input
-        type="file"
-        value={fileInputValue}
-        onChange={(e) => {
-          setFileInputFile(e.target.files[0]);
-          setFileInputValue(e.target.value);
-        }}
-        placeholder="Add file here "
-      />
-      <button onClick={handleSubmit}>Send</button>
-    </form>
+    <div className="App">
+      <header className="App-header">
+        <form className="form">
+          <input
+            type="text"
+            value={textInputValue}
+            onChange={handleChange}
+            placeholder="Enter your message"
+          />
+          <input
+            type="file"
+            value={fileInputValue}
+            onChange={(e) => {
+              setFileInputFile(e.target.files[0]);
+              setFileInputValue(e.target.value);
+            }}
+            placeholder="Add file here "
+          />
+          <button onClick={handleSubmit}>Send</button>
+        </form>
+      </header>
+    </div>
   );
 }
 

@@ -51,42 +51,46 @@ function MessageList() {
   };
 
   return (
-    <div>
-      {messages && messages.length > 0 ? (
-        messages.map((messageItem) => (
-          <Card
-            key={messageItem.key}
-            style={{
-              width: "50vw",
-              margin: "1em",
-              padding: "2em",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Card.Title>{messageItem.val.date}</Card.Title>
-            <div style={{ maxHeight: "90%" }}>
-              <img
-                style={{ height: "90%", width: "90%", objectFit: "contain" }}
-                src={messageItem.val.url}
-                alt={messageItem.val.name}
-              />
-            </div>
-            <Card.Text>{messageItem.val.message}</Card.Text>
-            <Button
-              variant="outline-danger"
-              className="w-50"
-              onClick={() => handleDelete(messageItem.key, messageItem.val.ref)}
+    <div className="App">
+      <header className="App-header">
+        {messages && messages.length > 0 ? (
+          messages.map((messageItem) => (
+            <Card
+              key={messageItem.key}
+              style={{
+                width: "50vw",
+                margin: "1em",
+                padding: "2em",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              Delete
-            </Button>
-          </Card>
-        ))
-      ) : (
-        <p>No messages</p>
-      )}
+              <Card.Title>{messageItem.val.date}</Card.Title>
+              <div style={{ maxHeight: "90%" }}>
+                <img
+                  style={{ height: "90%", width: "90%", objectFit: "contain" }}
+                  src={messageItem.val.url}
+                  alt={messageItem.val.name}
+                />
+              </div>
+              <Card.Text>{messageItem.val.message}</Card.Text>
+              <Button
+                variant="outline-danger"
+                className="w-50"
+                onClick={() =>
+                  handleDelete(messageItem.key, messageItem.val.ref)
+                }
+              >
+                Delete
+              </Button>
+            </Card>
+          ))
+        ) : (
+          <p>No messages</p>
+        )}
+      </header>
     </div>
   );
 }
